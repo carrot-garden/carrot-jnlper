@@ -8,7 +8,6 @@
 		<groupId>com.carrotgarden</groupId>
 		<artifactId>carrot-jnlper</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
-		<relativePath>../carrot-jnlper</relativePath>
 	</parent>
 
 	<artifactId>carrot-jnlp-archon</artifactId>
