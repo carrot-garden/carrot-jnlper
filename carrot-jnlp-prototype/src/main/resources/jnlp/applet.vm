@@ -1,0 +1,23 @@
+#parse("jnlp-header.vm")
+
+<jnlp
+#parse("jnlp-tag-props.vm")
+	>
+
+#parse("jnlp-information.vm")
+#parse("jnlp-resources.vm")
+
+	<!-- applet class; must extend java.awt.Applet -->
+	<!-- width and height: when online - taken from <applet> tag; when off-line - taken from <applet-desc> tag -->
+	<applet-desc
+		name="$productName"
+		main-class="$mainClass"
+		progress-class="$progressClass"
+		width="1000" height="500"
+		>
+
+#parse("jnlp-parameters.vm")
+
+	</applet-desc>
+
+</jnlp>

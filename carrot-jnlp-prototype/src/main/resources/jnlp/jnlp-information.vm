@@ -1,0 +1,28 @@
+	<information>
+
+		<title>$productName</title>
+		<vendor>$productCompany</vendor>
+		<homepage href="$productHomePage" />
+
+		<description>$productDescription</description>
+		<description kind="short">$productDescription</description>
+		<description kind="tooltip">$productDescription</description>
+		<description kind="one-line">$productDescription</description>
+
+		<icon kind="default"  href="$productImages/logo_256x256.png" width="256" height="256" />
+		<icon kind="splash"   href="$productImages/logo_256x256.png" width="256" height="256" />
+
+		<!-- used by windows -->
+		<icon kind="shortcut" href="$productImages/logo_bundle.ico"  width="48" height="48" />
+		<!-- used by unix    -->
+		<icon kind="shortcut" href="$productImages/logo_48x48.png"   width="48" height="48" />
+
+		<!-- prefer a shortcut for online operation -->
+		<shortcut online="true">
+			<!-- create desktop shortcut using <vendor> -->
+			<desktop/>
+			<!-- create startup menu shortcut using <vendor>/<title> -->
+			<menu submenu="$productCompany"/>
+		</shortcut>
+
+	</information>

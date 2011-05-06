@@ -1,0 +1,21 @@
+#parse("jnlp-header.vm")
+
+<jnlp
+#parse("jnlp-tag-props.vm")
+	>
+
+#parse("jnlp-information.vm")
+#parse("jnlp-resources.vm")
+
+	<!-- application class must provide main() -->
+	<application-desc
+		name="$productName"
+		main-class="$mainClass"
+		progress-class="$progressClass"
+		>
+
+#parse("jnlp-arguments.vm")
+
+	</application-desc>
+
+</jnlp>

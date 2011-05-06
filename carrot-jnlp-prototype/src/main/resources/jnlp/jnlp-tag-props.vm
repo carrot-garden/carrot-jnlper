@@ -1,0 +1,5 @@
+	spec="$jnlpSpecVersion"
+	servlet-site="$$site"
+	servlet-context="$$context"
+	codebase="$$codebase"
+	href="$$name"

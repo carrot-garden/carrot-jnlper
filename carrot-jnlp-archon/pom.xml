@@ -1,0 +1,401 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+
+	<parent>
+		<groupId>com.carrotgarden</groupId>
+		<artifactId>carrot-jnlper</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../carrot-jnlper</relativePath>
+	</parent>
+
+	<artifactId>carrot-jnlp-archon</artifactId>
+	<packaging>pom</packaging>
+
+	<properties>
+
+		<!-- pom props shortcuts -->
+		<target>${project.build.directory}</target>
+		<finalName>${project.build.finalName}</finalName>
+
+		<!-- optional -->
+		<!-- must implement http://download.oracle.com/javase/6/docs/jre/api/javaws/jnlp/javax/jnlp/DownloadServiceListener.html -->
+		<progressJar>none</progressJar>
+		<progressClass>none</progressClass>
+
+		<!-- NOT optional; must contain INDEX.LIST for all dependencies for applet
+			to work in plugin V1 mode; -->
+		<mainJar>${finalName}.jar</mainJar>
+
+		<!-- NOT optional -->
+		<mainClassApplet>you-must-override-mainClassApplet</mainClassApplet>
+		<mainClassApplication>you-must-override-mainClassApplication</mainClassApplication>
+
+		<!-- ####### -->
+
+		<!-- http://download.oracle.com/javase/6/docs/technotes/guides/javaws/developersguide/syntax.html -->
+
+		<!-- these hacks are due to bugs in javaws.jar and deployJava.js -->
+		<!-- used by javaDeploy.js to constrain original download; must use specific
+			version (no "+" or "*") -->
+		<initJavaVersion>1.6.0_20</initJavaVersion>
+		<!-- used by javaws.jar to constrain subsequent launches; must use "+"
+			wildcard; must be below "init" version -->
+		<jnlpJavaVersion>1.6.0+</jnlpJavaVersion>
+
+		<!-- required jnlp api version -->
+		<jnlpSpecVersion>6.0+</jnlpSpecVersion>
+
+		<!-- jnlp jvm parameters ; note: when activated (set to "true") will produce
+			2 jvm instances on startup; see velocity templates -->
+		<jnlpJavaUseArgs>false</jnlpJavaUseArgs>
+		<jnlpJavaArgsString>-Xincgc</jnlpJavaArgsString>
+		<jnlpJavaHeapMinimum>128m</jnlpJavaHeapMinimum>
+		<jnlpJavaHeapMaximum>256m</jnlpJavaHeapMaximum>
+
+		<!-- see velocity templates -->
+		<jnlpUpdateMode>check="background" policy="always"</jnlpUpdateMode>
+
+		<!-- ####### -->
+
+		<!-- location of extracted jnlp prototype files -->
+		<jnlpPrototype>${target}/jnlp-prototype</jnlpPrototype>
+
+		<!-- location of final jnlp build result before zip -->
+		<jnlpAssembly>${target}/jnlp</jnlpAssembly>
+
+		<!-- names of jnlp files -->
+		<jnlpFileApplet>applet.jnlp</jnlpFileApplet>
+		<jnlpFileApplication>application.jnlp</jnlpFileApplication>
+
+		<!-- tomcatServerId must be defined in settings.xml on build server -->
+		<tomcatServerId>carrotgarden-tomcat-server</tomcatServerId>
+		<tomcatManagerUrl>http://carrotgarden:8080/manager/text</tomcatManagerUrl>
+		<tomcatContext>you-must-override-tomcatContext</tomcatContext>
+
+		<!-- must provide in settings.xml -->
+		<certificateServerId>carrotgarden-certificate</certificateServerId>
+		<certificateKeyStore>${user.home}/.ssl/carrotgarden-java-keys.jks</certificateKeyStore>
+
+		<!-- branding; see velocity templates -->
+		<productId>carrot-0</productId>
+		<productName>carrot-product</productName>
+		<productDescription>carrot-product-description</productDescription>
+		<productCompany>carrot-company</productCompany>
+		<productHomePage>http://www.carrotgarden.com/</productHomePage>
+		<productImages>images/brand/${productId}</productImages>
+
+		<!-- use this format to insert parameters for applets and properties for
+			applications in jnlp files; see velocity templates -->
+		<jnlpProperty1000>name="productId" value="${productId}"</jnlpProperty1000>
+
+		<!-- use this format to insert arguments for applications; see velocity
+			templates -->
+		<!-- <jnlpArgument1000>-test=true</jnlpArgument1000> -->
+
+	</properties>
+
+	<build>
+
+		<pluginManagement>
+			<plugins>
+
+				<!-- http://mojo.codehaus.org/tomcat-maven-plugin/deploy-mojo.html -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>tomcat-maven-plugin</artifactId>
+					<version>1.1</version>
+					<configuration>
+						<server>${tomcatServerId}</server>
+						<url>${tomcatManagerUrl}</url>
+						<!-- must be overwritten by profile below -->
+						<path>/${tomcatContext}-invalid</path>
+						<mode>war</mode>
+						<warFile>${target}/${finalName}.zip</warFile>
+						<update>true</update>
+						<ignorePackaging>true</ignorePackaging>
+					</configuration>
+				</plugin>
+
+			</plugins>
+		</pluginManagement>
+
+	</build>
+
+	<profiles>
+
+		<profile>
+
+			<id>make-jnlp</id>
+
+			<build>
+
+				<plugins>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-dependency-plugin</artifactId>
+						<executions>
+
+							<!-- download and copy all dependency jars -->
+							<execution>
+								<id>download-project-dependencies</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>copy-dependencies</goal>
+								</goals>
+							</execution>
+
+							<!-- download and unpack jnlp prototype -->
+							<execution>
+								<id>download-jnlp-prototype</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>unpack</goal>
+								</goals>
+								<configuration>
+									<overWriteIfNewer>true</overWriteIfNewer>
+									<artifactItems>
+										<artifactItem>
+											<groupId>com.carrotgarden</groupId>
+											<artifactId>carrot-jnlp-prototype</artifactId>
+											<version>${project.version}</version>
+											<type>jar</type>
+											<outputDirectory>${jnlpPrototype}</outputDirectory>
+										</artifactItem>
+									</artifactItems>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<!-- merge resources -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-resources-plugin</artifactId>
+						<executions>
+
+							<execution>
+								<id>merge-resources</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+
+									<resources>
+
+										<!-- from prototype -->
+										<resource>
+											<directory>${jnlpPrototype}/more</directory>
+											<filtering>true</filtering>
+										</resource>
+										<!-- from current project -->
+										<resource>
+											<directory>src/build/more</directory>
+											<filtering>true</filtering>
+										</resource>
+
+										<!-- from prototype -->
+										<!-- http://download.oracle.com/javase/1.5.0/docs/guide/javaws/developersguide/downloadservletguide.html -->
+										<resource>
+											<directory>${jnlpPrototype}/servlet</directory>
+											<filtering>false</filtering>
+										</resource>
+										<!-- from current project -->
+										<resource>
+											<directory>src/build/servlet</directory>
+											<filtering>false</filtering>
+										</resource>
+
+									</resources>
+
+									<outputDirectory>${jnlpAssembly}</outputDirectory>
+
+								</configuration>
+							</execution>
+
+							<execution>
+								<id>override-templates</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+
+									<resources>
+
+										<!-- from current project -->
+										<resource>
+											<directory>src/build/jnlp</directory>
+											<filtering>true</filtering>
+										</resource>
+
+									</resources>
+
+									<outputDirectory>${jnlpPrototype}/jnlp</outputDirectory>
+
+								</configuration>
+							</execution>
+
+						</executions>
+					</plugin>
+
+					<!-- read certificate alias and pass from settings.xml -->
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>groovy-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>read-maven-setttings</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<!-- read certificate alias and store pass from settings.xml -->
+									<!-- used by webstart-maven-plugin -->
+									<source>
+									<![CDATA[
+										//
+										name = project.properties['certificateServerId'];
+										server = settings.servers.find{it.id.equals(name)};
+										println('### certificateServerId(' + server + ')');
+										project.properties['certificateAlias'] = server.username;
+										project.properties['certificateStorePass'] = server.password;
+										//
+
+										//
+									]]>
+									</source>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<!-- produce custom jar for main app artifact -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jar-plugin</artifactId>
+						<configuration>
+							<archive>
+								<index>true</index>
+								<manifest>
+									<addClasspath>true</addClasspath>
+									<!-- http://maven.apache.org/shared/maven-archiver/examples/classpath.html -->
+									<classpathLayoutType>custom</classpathLayoutType>
+									<customClasspathLayout>${artifact.artifactId}-${artifact.baseVersion}${dashClassifier?}.${artifact.extension}
+									</customClasspathLayout>
+								</manifest>
+							</archive>
+						</configuration>
+					</plugin>
+
+					<!-- produce jnlp files and signed jars -->
+					<plugin>
+						<groupId>org.codehaus.mojo.webstart</groupId>
+						<artifactId>webstart-maven-plugin</artifactId>
+						<version>1.0-beta-1</version>
+
+						<configuration>
+
+							<verbose>false</verbose>
+							<pack200>false</pack200>
+
+							<unsignAlreadySignedJars>true</unsignAlreadySignedJars>
+
+							<sign>
+								<alias>${certificateAlias}</alias>
+								<keystore>${certificateKeyStore}</keystore>
+								<storepass>${certificateStorePass}</storepass>
+							</sign>
+
+							<workDirectory>${jnlpAssembly}</workDirectory>
+
+						</configuration>
+
+						<executions>
+
+							<execution>
+								<id>make-applet</id>
+								<phase>package</phase>
+								<goals>
+									<goal>jnlp-single</goal>
+								</goals>
+								<configuration>
+									<jnlp>
+										<mainClass>${mainClassApplet}</mainClass>
+										<inputTemplateResourcePath>${jnlpPrototype}/jnlp
+										</inputTemplateResourcePath>
+										<inputTemplate>applet.vm</inputTemplate>
+										<outputFile>${jnlpFileApplet}</outputFile>
+									</jnlp>
+								</configuration>
+							</execution>
+
+							<execution>
+								<id>make-application</id>
+								<phase>package</phase>
+								<goals>
+									<goal>jnlp-single</goal>
+								</goals>
+								<configuration>
+									<jnlp>
+										<mainClass>${mainClassApplication}</mainClass>
+										<inputTemplateResourcePath>${jnlpPrototype}/jnlp
+										</inputTemplateResourcePath>
+										<inputTemplate>application.vm</inputTemplate>
+										<outputFile>${jnlpFileApplication}</outputFile>
+									</jnlp>
+								</configuration>
+							</execution>
+
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+
+		</profile>
+
+		<!-- deploy to release location -->
+		<profile>
+			<id>tomcat-release</id>
+			<activation>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>tomcat-maven-plugin</artifactId>
+						<configuration>
+							<path>/${tomcatContext}</path>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<!-- deploy to staging location -->
+		<profile>
+			<id>tomcat-staging</id>
+			<activation>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>tomcat-maven-plugin</artifactId>
+						<configuration>
+							<path>/${tomcatContext}-staging</path>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+	</profiles>
+
+</project>

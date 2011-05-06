@@ -1,0 +1,6 @@
+		<!-- applet tag parameters for java.awt.Applet -->
+#foreach( $key in $properties.keySet() )
+#if( $key.contains("jnlpProperty") )
+		<param $properties.get($key) />
+#end
+#end

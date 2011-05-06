@@ -1,0 +1,6 @@
+		<!-- "-D" system properties for both applet and application -->
+#foreach( $key in $properties.keySet() )
+#if( $key.contains("jnlpProperty") )
+		<property $properties.get($key) />
+#end
+#end

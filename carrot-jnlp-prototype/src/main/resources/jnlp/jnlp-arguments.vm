@@ -1,0 +1,6 @@
+		<!-- command line arguments for application.main() -->
+#foreach( $key in $properties.keySet() )
+#if( $key.contains("jnlpArgument") )
+		<argument>$properties.get($key)</argument>
+#end
+#end

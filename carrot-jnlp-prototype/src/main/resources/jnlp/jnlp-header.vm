@@ -1,0 +1,9 @@
+${carrotTimeJnlp}
+
+<!-- build time : ${carrotTimeISO} -->
+<!-- servlet-site=$$site -->
+<!-- servlet-context=$$context -->
+<!-- http://download.oracle.com/javase/6/docs/technotes/guides/javaws/developersguide/contents.html -->
+
+<?xml version="1.0" encoding="utf-8"?>
+#set( $properties = $project.properties )
