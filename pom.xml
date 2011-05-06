@@ -19,7 +19,7 @@
 	</modules>
 
 	<scm>
-		<url>http://carrotgarden.googlecode.com/</url>
+		<url>https://github.com/carrot-garden/carrot-jnlper</url>
 		<connection>scm:git:git://github.com/carrot-garden/carrot-jnlper.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/carrot-garden/carrot-jnlper.git</developerConnection>
 	</scm>
