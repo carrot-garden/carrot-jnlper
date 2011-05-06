@@ -18,4 +18,10 @@
 		<module>carrot-jnlp-prototype</module>
 	</modules>
 
+	<scm>
+		<url>http://carrotgarden.googlecode.com/</url>
+		<connection>scm:git:git://github.com/carrot-garden/carrot-jnlper.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/carrot-garden/carrot-jnlper.git</developerConnection>
+	</scm>
+
 </project>
