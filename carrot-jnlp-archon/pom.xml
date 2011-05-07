@@ -71,7 +71,7 @@
 
 		<!-- tomcatServerId must be defined in settings.xml on build server -->
 		<tomcatServerId>carrotgarden-tomcat-server</tomcatServerId>
-		<tomcatManagerUrl>http://carrotgarden:8080/manager/text</tomcatManagerUrl>
+		<tomcatManagerUrl>http://www.carrotgarden.com:8080/manager/text</tomcatManagerUrl>
 		<tomcatContext>you-must-override-tomcatContext</tomcatContext>
 
 		<!-- must provide in settings.xml -->
