@@ -28,8 +28,9 @@
 			to work in plugin V1 mode; -->
 		<mainJar>${finalName}.jar</mainJar>
 
-		<!-- NOT optional -->
+		<!-- NOT optional; must extend java.awt.Applet -->
 		<mainClassApplet>you-must-override-mainClassApplet</mainClassApplet>
+		<!-- NOT optional; must provide main() -->
 		<mainClassApplication>you-must-override-mainClassApplication</mainClassApplication>
 
 		<!-- ####### -->
@@ -41,7 +42,7 @@
 			version (no "+" or "*") -->
 		<initJavaVersion>1.6.0_20</initJavaVersion>
 		<!-- used by javaws.jar to constrain subsequent launches; must use "+"
-			wildcard; must be below "init" version -->
+			wildcard; must be less then "init" version -->
 		<jnlpJavaVersion>1.6.0+</jnlpJavaVersion>
 
 		<!-- required jnlp api version -->
@@ -264,8 +265,6 @@
 										println('### certificateServerId(' + server + ')');
 										project.properties['certificateAlias'] = server.username;
 										project.properties['certificateStorePass'] = server.password;
-										//
-
 										//
 									]]>
 									</source>
