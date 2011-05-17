@@ -15,6 +15,10 @@
 
 	<properties>
 
+		<prototypeGroupId>com.carrotgarden</prototypeGroupId>
+		<prototypeArtifactId>carrot-jnlp-prototype</prototypeArtifactId>
+		<prototypeVersion>1.0.0-SNAPSHOT</prototypeVersion>
+
 		<!-- pom props shortcuts -->
 		<target>${project.build.directory}</target>
 		<finalName>${project.build.finalName}</finalName>
@@ -159,9 +163,9 @@
 									<overWriteIfNewer>true</overWriteIfNewer>
 									<artifactItems>
 										<artifactItem>
-											<groupId>com.carrotgarden</groupId>
-											<artifactId>carrot-jnlp-prototype</artifactId>
-											<version>${project.version}</version>
+											<groupId>${prototypeGroupId}</groupId>
+											<artifactId>${prototypeArtifactId}</artifactId>
+											<version>${prototypeVersion}</version>
 											<type>jar</type>
 											<outputDirectory>${jnlpPrototype}</outputDirectory>
 										</artifactItem>

@@ -10,5 +10,6 @@
 	</parent>
 
 	<artifactId>carrot-jnlp-prototype</artifactId>
+	<packaging>jar</packaging>
 
 </project>
