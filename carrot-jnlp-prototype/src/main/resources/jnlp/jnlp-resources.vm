@@ -18,7 +18,7 @@
 #end
 			/>
 
-#foreach( $entry in $dependencies.split("\n") )
+#foreach( $entry in $dependencies.split("\\n") )
 #if( $entry.contains("$mainJar"))
 		<!-- "main jar" must contain INDEX.LIST for applet; may provide main() for application; may extend java.awt.Applet for applet -->
 		<jar href="$mainJar" download="eager" main="true"/>
