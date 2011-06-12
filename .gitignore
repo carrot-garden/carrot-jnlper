@@ -6,3 +6,8 @@ target/
 logs/
 release.properties
 pom.xml.releaseBackup
+
+!carrot-jdk6-jnlp/.project
+!carrot-jdk6-jnlp/.classpath
+!carrot-jdk6-jnlp/.settings/
+
