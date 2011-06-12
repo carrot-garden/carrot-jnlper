@@ -1,13 +1,25 @@
 .project
 .classpath
 .settings/
+
 bin/
 target/
 logs/
 release.properties
 pom.xml.releaseBackup
 
-!carrot-jdk6-jnlp/.project
-!carrot-jdk6-jnlp/.classpath
-!carrot-jdk6-jnlp/.settings/
+
+# store eclipse config for these
+
+!carrot-jdk6-jnlp-unix/.project
+!carrot-jdk6-jnlp-unix/.classpath
+!carrot-jdk6-jnlp-unix/.settings/
+
+!carrot-jdk6-jnlp-windows/.project
+!carrot-jdk6-jnlp-windows/.classpath
+!carrot-jdk6-jnlp-windows/.settings/
+
+!carrot-jdk6-jnlp-macosx/.project
+!carrot-jdk6-jnlp-macosx/.classpath
+!carrot-jdk6-jnlp-macosx/.settings/
 
