@@ -17,6 +17,7 @@
 	<modules>
 		<module>carrot-jnlp-archon</module>
 		<module>carrot-jnlp-prototype</module>
+		<module>carrot-jdk6-jnlp-zoom</module>
 	</modules>
 
 	<scm>
