@@ -5,7 +5,6 @@
 	<classpathentry kind="src" path="src/common/macosx/classes"/>
 	<classpathentry kind="src" path="src/javaws/macosx/classes"/>
 	<classpathentry kind="src" path="src/common/unix/classes"/>
-	<classpathentry kind="src" path="src/javaws/unix/classes"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

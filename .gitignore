@@ -23,3 +23,11 @@ pom.xml.releaseBackup
 !carrot-jdk6-jnlp-macosx/.classpath
 !carrot-jdk6-jnlp-macosx/.settings/
 
+!carrot-jdk7-jnlp-decompile-deploy/.project
+!carrot-jdk7-jnlp-decompile-deploy/.classpath
+!carrot-jdk7-jnlp-decompile-deploy/.settings/
+
+!carrot-jdk7-jnlp-decompile-javaws/.project
+!carrot-jdk7-jnlp-decompile-javaws/.classpath
+!carrot-jdk7-jnlp-decompile-javaws/.settings/
+
