@@ -4,6 +4,9 @@
 	<classpathentry kind="src" path="src/common/unix/classes"/>
 	<classpathentry kind="src" path="src/javaws/share/classes"/>
 	<classpathentry kind="src" path="src/javaws/unix/classes"/>
+	<classpathentry excluding="sun/plugin2/test/|sun/plugin2/main/server/SafariPlugin.java|sun/plugin2/main/client/WMozillaServiceDelegate.java|sun/plugin/com/BeanCustomizer.java|sun/plugin/services/AxBridgeBrowserService.java|sun/plugin/services/WIExplorerBrowserService.java|sun/plugin/services/WNetscape4BrowserService.java|sun/plugin/services/WNetscape6BrowserAuthenticator.java|sun/plugin/services/WNetscape6BrowserService.java|sun/plugin/services/WPlatformService.java|sun/plugin/viewer/IExplorerAppletStatusListener.java|sun/plugin/viewer/IExplorerPluginContext.java|sun/plugin/viewer/IExplorerPluginObject.java|sun/plugin/viewer/WNetscapePluginContext.java|sun/plugin/viewer/WNetscapePluginObject.java|sun/plugin/viewer/frame/AxBridgeEmbeddedFrame.java|sun/plugin/viewer/frame/IExplorerEmbeddedFrame.java|sun/plugin/viewer/frame/WNetscapeEmbeddedFrame.java|sun/plugin/viewer/AxBridgeContext.java|sun/plugin/viewer/AxBridgeObject.java|sun/plugin2/main/client/WIExplorerServiceDelegate.java" kind="src" path="src/plugin/share/classes"/>
+	<classpathentry kind="src" path="src/plugin/solaris/classes"/>
+	<classpathentry kind="src" path="src/kernel/share/classes"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
